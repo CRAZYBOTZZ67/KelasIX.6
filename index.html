@@ -1,0 +1,2702 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+<meta name="description" content="IX.6">
+<title>Website Kelas IX.6</title>
+
+<style>
+:root{
+  --blue:#2563eb;
+  --blue-dark:#173b8f;
+  --blue-light:#eff6ff;
+  --navy:#10234f;
+  --text:#172033;
+  --muted:#6b7280;
+  --white:#ffffff;
+  --bg:#f6f9ff;
+  --line:#e5eaf3;
+  --green:#16a34a;
+  --paper:#fdfaf3;
+  --paper-dark:#f4ecd8;
+  --shadow:0 12px 35px rgba(31,62,120,.09);
+  --brown:#8b6b3f;
+  --brown-dark:#5c4526;
+
+  --line-blue:rgba(37,99,235,.14);
+  --line-red:rgba(220,80,80,.22);
+  --line-paper:#f8f4e9;
+
+  /* Warna Tema TikTok */
+  --tt-cyan:#25F4EE;
+  --tt-red:#FE2C55;
+  --tt-dark:#000000;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html{
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg);
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
+  color:var(--text);
+  background-color: var(--line-paper);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 31px,
+      var(--line-blue) 31px,
+      var(--line-blue) 32px
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 70px,
+      var(--line-red) 70px,
+      var(--line-red) 72px,
+      transparent 72px
+    ),
+    radial-gradient(circle at 10% 0%, rgba(37,99,235,.05), transparent 30%),
+    radial-gradient(circle at 100% 20%, rgba(96,165,250,.05), transparent 30%);
+  background-attachment: fixed;
+  overflow-x:hidden;
+}
+
+@media (min-width: 900px){
+  body::before{
+    content:"";
+    position:fixed;
+    left:26px;
+    top:0;
+    bottom:0;
+    width:12px;
+    background-image:
+      radial-gradient(circle, #d6cfb8 0 4px, transparent 5px),
+      radial-gradient(circle, rgba(0,0,0,.08) 0 5px, transparent 6px);
+    background-size: 12px 90px;
+    background-position: center 30px;
+    background-repeat: repeat-y;
+    pointer-events:none;
+    z-index:0;
+    opacity:.7;
+  }
+}
+
+button,input,select{font:inherit;}
+button{border:0;cursor:pointer;}
+
+.app{min-height:100vh;width:100%;position:relative;z-index:1;}
+
+#introScreen{
+  position:fixed;
+  inset:0;
+  z-index:2000;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at 30% 20%,#1e3a8a 0%,#0b1220 55%,#050a18 100%);
+  overflow:hidden;
+  transition:opacity .8s ease, transform .8s ease, visibility .8s;
+}
+
+#introScreen::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%,#fff,transparent),
+    radial-gradient(2px 2px at 60% 70%,#fff,transparent),
+    radial-gradient(1px 1px at 80% 20%,#fff,transparent),
+    radial-gradient(1px 1px at 40% 80%,#fff,transparent),
+    radial-gradient(2px 2px at 90% 60%,#fff,transparent),
+    radial-gradient(1px 1px at 10% 60%,#fff,transparent);
+  background-size:100% 100%;
+  opacity:.5;
+  animation:stars 6s ease-in-out infinite;
+}
+
+@keyframes stars{
+  0%,100%{opacity:.4;}
+  50%{opacity:.9;}
+}
+
+#introScreen.hide{
+  opacity:0;
+  visibility:hidden;
+  transform:scale(1.1);
+}
+
+.intro-inner{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  max-width:600px;
+  width:100%;
+  animation:introIn 1s cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes introIn{
+  from{opacity:0; transform:translateY(40px) scale(.9);}
+  to{opacity:1; transform:translateY(0) scale(1);}
+}
+
+.intro-tag{
+  display:inline-block;
+  padding:7px 16px;
+  border-radius:999px;
+  background:rgba(96,165,250,.15);
+  border:1px solid rgba(96,165,250,.3);
+  color:#93c5fd;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:2px;
+  margin-bottom:24px;
+  animation:fadeUp .8s .1s both;
+}
+
+.book-3d{
+  width:220px;
+  height:290px;
+  margin:0 auto 30px;
+  perspective:1400px;
+  animation:bookFloat 4s ease-in-out infinite;
+}
+
+@keyframes bookFloat{
+  0%,100%{transform:translateY(0) rotate(-2deg);}
+  50%{transform:translateY(-12px) rotate(1deg);}
+}
+
+.book-cover{
+  position:relative;
+  width:100%;
+  height:100%;
+  transform-style:preserve-3d;
+  transform:rotateY(-22deg) rotateX(6deg);
+  transition:transform .9s cubic-bezier(.22,1,.36,1);
+  animation:coverOpen 3.5s cubic-bezier(.22,1,.36,1) infinite alternate;
+}
+
+@keyframes coverOpen{
+  0%{transform:rotateY(-22deg) rotateX(6deg);}
+  100%{transform:rotateY(-8deg) rotateX(3deg);}
+}
+
+.cover-front{
+  position:absolute;
+  inset:0;
+  border-radius:6px 14px 14px 6px;
+  background:
+    linear-gradient(135deg,#1e3a8a 0%,#2563eb 45%,#1d4ed8 100%);
+  box-shadow:
+    inset 8px 0 20px rgba(0,0,0,.35),
+    inset -4px 0 12px rgba(255,255,255,.08),
+    0 30px 60px rgba(0,0,0,.6),
+    0 0 80px rgba(37,99,235,.4);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  padding:30px;
+  border:1px solid rgba(255,255,255,.15);
+  overflow:hidden;
+}
+
+.cover-front::before{
+  content:"";
+  position:absolute;
+  left:14px;
+  top:0;
+  bottom:0;
+  width:3px;
+  background:linear-gradient(180deg,#d4af37,#f5d76e,#d4af37);
+  box-shadow:0 0 12px rgba(245,215,110,.5);
+}
+
+.cover-front::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,.12) 50%,transparent 60%);
+  transform:translateX(-100%);
+  animation:shine 3s ease-in-out infinite;
+}
+
+@keyframes shine{
+  0%{transform:translateX(-100%);}
+  60%,100%{transform:translateX(150%);}
+}
+
+.cover-emoji{
+  font-size:52px;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.3));
+  animation:emojiSpin 5s ease-in-out infinite;
+}
+
+@keyframes emojiSpin{
+  0%,100%{transform:rotate(-6deg) scale(1);}
+  50%{transform:rotate(6deg) scale(1.08);}
+}
+
+.cover-title{
+  font-size:22px;
+  font-weight:900;
+  color:#fff;
+  letter-spacing:1px;
+  line-height:1.2;
+  text-shadow:0 2px 8px rgba(0,0,0,.5);
+}
+
+.cover-sub{
+  font-size:10px;
+  color:#c7d2fe;
+  letter-spacing:3px;
+  font-weight:700;
+  text-transform:uppercase;
+}
+
+.cover-line{
+  width:60px;
+  height:2px;
+  background:linear-gradient(90deg,transparent,#f5d76e,transparent);
+  margin-top:4px;
+}
+
+.book-spine{
+  position:absolute;
+  left:-14px;
+  top:0;
+  bottom:0;
+  width:18px;
+  border-radius:4px 0 0 4px;
+  background:linear-gradient(90deg,#0a1638,#1e3a8a,#0a1638);
+  transform:translateZ(-9px);
+  box-shadow:inset 2px 0 6px rgba(0,0,0,.6);
+}
+
+.book-pages{
+  position:absolute;
+  right:-6px;
+  top:6px;
+  bottom:6px;
+  width:6px;
+  border-radius:0 6px 6px 0;
+  background:repeating-linear-gradient(
+    180deg,
+    #f5f0e6 0px, #f5f0e6 1px,
+    #d9d2c2 1px, #d9d2c2 2px
+  );
+  transform:translateZ(-4px);
+  box-shadow:1px 0 4px rgba(0,0,0,.3);
+}
+
+.intro-title{
+  font-size:clamp(28px,6vw,46px);
+  font-weight:900;
+  color:#fff;
+  letter-spacing:-1px;
+  line-height:1.1;
+  margin-bottom:14px;
+  animation:fadeUp .8s .2s both;
+}
+
+.intro-title span{
+  background:linear-gradient(135deg,#60a5fa,#93c5fd,#dbeafe);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  display:inline-block;
+  animation:glowText 3s ease-in-out infinite;
+}
+
+@keyframes glowText{
+  0%,100%{filter:drop-shadow(0 0 8px rgba(96,165,250,.4));}
+  50%{filter:drop-shadow(0 0 20px rgba(96,165,250,.8));}
+}
+
+.intro-desc{
+  color:#94a3b8;
+  font-size:14px;
+  line-height:1.7;
+  max-width:440px;
+  margin:0 auto 30px;
+  animation:fadeUp .8s .3s both;
+}
+
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+.open-album-btn{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  padding:17px 36px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8,#1e40af);
+  color:white;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:.5px;
+  box-shadow:
+    0 12px 30px rgba(37,99,235,.45),
+    inset 0 1px 0 rgba(255,255,255,.25);
+  overflow:hidden;
+  transition:.35s cubic-bezier(.22,1,.36,1);
+  animation:fadeUp .8s .45s both, btnPulse 2.5s 1.5s ease-in-out infinite;
+}
+
+@keyframes btnPulse{
+  0%,100%{box-shadow:0 12px 30px rgba(37,99,235,.45), inset 0 1px 0 rgba(255,255,255,.25);}
+  50%{box-shadow:0 12px 45px rgba(37,99,235,.75), 0 0 0 8px rgba(37,99,235,.12), inset 0 1px 0 rgba(255,255,255,.25);}
+}
+
+.open-album-btn::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);
+  transform:translateX(-100%);
+  transition:transform .8s ease;
+}
+
+.open-album-btn:hover::before{transform:translateX(100%);}
+
+.open-album-btn:hover{
+  transform:translateY(-4px) scale(1.04);
+  box-shadow:0 20px 45px rgba(37,99,235,.6);
+}
+
+.open-album-btn:active{
+  transform:translateY(-1px) scale(.98);
+}
+
+.open-album-btn .btn-icon{
+  font-size:22px;
+  animation:bookWiggle 1.8s ease-in-out infinite;
+}
+
+@keyframes bookWiggle{
+  0%,100%{transform:rotate(-8deg);}
+  50%{transform:rotate(8deg);}
+}
+
+.open-album-btn .btn-arrow{
+  font-size:20px;
+  transition:.3s;
+}
+
+.open-album-btn:hover .btn-arrow{transform:translateX(6px);}
+
+.intro-hint{
+  margin-top:22px;
+  color:#64748b;
+  font-size:11px;
+  letter-spacing:1px;
+  animation:fadeUp .8s .6s both;
+}
+
+.view{
+  display:none;
+  min-height:100vh;
+  width:100%;
+  padding:25px 18px 40px;
+  position:relative;
+  z-index:1;
+}
+
+.view.active{
+  display:block;
+  animation:viewIn .5s cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes viewIn{
+  from{opacity:0; transform:translateY(24px) scale(.97); filter:blur(6px);}
+  to{opacity:1; transform:translateY(0) scale(1); filter:blur(0);}
+}
+
+.container{width:min(1100px,100%);margin:auto;}
+
+.home-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:25px;
+  animation:fadeDown .6s cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes fadeDown{
+  from{opacity:0; transform:translateY(-16px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+.brand{display:flex;align-items:center;gap:12px;}
+
+.logo{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  display:grid;
+  place-items:center;
+  color:white;
+  font-size:22px;
+  font-weight:900;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  box-shadow:0 9px 20px rgba(37,99,235,.2);
+  animation:logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat{
+  0%,100%{transform:translateY(0) rotate(0deg);}
+  50%{transform:translateY(-4px) rotate(-3deg);}
+}
+
+.brand h1{font-size:18px;color:var(--navy);}
+.brand p{font-size:12px;color:var(--muted);margin-top:2px;}
+
+.status{
+  padding:8px 12px;
+  border-radius:999px;
+  background:white;
+  border:1px solid var(--line);
+  font-size:12px;
+  color:var(--green);
+  font-weight:700;
+  box-shadow:0 3px 10px rgba(31,62,120,.06);
+}
+
+.status span{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#22c55e;
+  margin-right:5px;
+  box-shadow:0 0 0 4px #dcfce7;
+  animation:pulse 1.6s infinite;
+}
+
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 4px #dcfce7;}
+  50%{box-shadow:0 0 0 8px rgba(34,197,94,.12);}
+}
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  border-radius:28px;
+  margin-bottom:25px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height:300px;
+  box-shadow:0 25px 60px rgba(20,40,90,.18);
+  animation:heroIn .9s cubic-bezier(.22,1,.36,1) both;
+  background:linear-gradient(135deg,#fdfaf3,#f4ecd8);
+  border:1px solid #e6dcc4;
+}
+
+@keyframes heroIn{
+  from{opacity:0; transform:translateY(30px) scale(.96);}
+  to{opacity:1; transform:translateY(0) scale(1);}
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:14px;
+  transform:translateX(-50%);
+  background:
+    linear-gradient(90deg,
+      rgba(0,0,0,.06) 0%,
+      rgba(0,0,0,.18) 45%,
+      rgba(0,0,0,.28) 50%,
+      rgba(0,0,0,.18) 55%,
+      rgba(0,0,0,.06) 100%);
+  box-shadow:
+    inset 2px 0 4px rgba(0,0,0,.15),
+    inset -2px 0 4px rgba(0,0,0,.15);
+  z-index:3;
+}
+
+.hero-page{
+  position:relative;
+  padding:38px 34px;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 27px,
+      rgba(37,99,235,.06) 28px
+    );
+  overflow:hidden;
+}
+
+.hero-page::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.4),transparent 60%);
+  pointer-events:none;
+}
+
+.hero-page.left{
+  border-radius:28px 0 0 28px;
+  box-shadow:inset -20px 0 30px -20px rgba(0,0,0,.15);
+  animation:pageLeft .9s .1s cubic-bezier(.22,1,.36,1) both;
+}
+
+.hero-page.right{
+  border-radius:0 28px 28px 0;
+  box-shadow:inset 20px 0 30px -20px rgba(0,0,0,.15);
+  animation:pageRight .9s .1s cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes pageLeft{
+  from{opacity:0; transform:translateX(-40px) rotateY(20deg);}
+  to{opacity:1; transform:translateX(0) rotateY(0);}
+}
+
+@keyframes pageRight{
+  from{opacity:0; transform:translateX(40px) rotateY(-20deg);}
+  to{opacity:1; transform:translateX(0) rotateY(0);}
+}
+
+.hero-badge{
+  display:inline-flex;
+  padding:7px 13px;
+  border-radius:999px;
+  background:var(--blue-light);
+  color:var(--blue);
+  font-weight:800;
+  font-size:11px;
+  margin-bottom:14px;
+  position:relative;
+  z-index:1;
+  animation:fadeIn .6s .3s both;
+  border:1px solid rgba(37,99,235,.15);
+}
+
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+.hero h2{
+  position:relative;
+  z-index:1;
+  font-size:clamp(26px,3.5vw,40px);
+  line-height:1.1;
+  color:var(--navy);
+  letter-spacing:-1.5px;
+  font-family:Georgia,"Times New Roman",serif;
+  animation:fadeUp .7s .3s both;
+}
+
+.hero h2 span{
+  color:var(--blue);
+  display:inline-block;
+  font-style:italic;
+  animation:highlight 3s ease-in-out infinite;
+}
+
+@keyframes highlight{
+  0%,100%{transform:translateX(0);}
+  50%{transform:translateX(5px);}
+}
+
+.hero p{
+  position:relative;
+  z-index:1;
+  margin-top:14px;
+  color:#5b6473;
+  line-height:1.75;
+  font-size:13.5px;
+  animation:fadeUp .7s .4s both;
+}
+
+.hero-quote{
+  position:relative;
+  z-index:1;
+  margin-top:18px;
+  padding-left:14px;
+  border-left:3px solid var(--blue);
+  font-style:italic;
+  color:#4b5563;
+  font-size:13px;
+  line-height:1.6;
+  font-family:Georgia,serif;
+  animation:fadeUp .7s .5s both;
+}
+
+.hero-quote small{
+  display:block;
+  margin-top:6px;
+  color:var(--muted);
+  font-size:11px;
+  font-style:normal;
+}
+
+.school-info{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:18px;
+  position:relative;
+  z-index:1;
+}
+
+.info-pill{
+  background:white;
+  border:1px solid #e6dcc4;
+  padding:8px 12px;
+  border-radius:11px;
+  font-size:11px;
+  font-weight:700;
+  color:#5c4526;
+  animation:fadeUp .6s both;
+  transition:.25s;
+  box-shadow:0 2px 6px rgba(139,107,63,.08);
+}
+
+.info-pill:nth-child(1){animation-delay:.55s;}
+.info-pill:nth-child(2){animation-delay:.65s;}
+.info-pill:nth-child(3){animation-delay:.75s;}
+
+.info-pill:hover{
+  transform:translateY(-3px) rotate(-1deg);
+  border-color:#c4a56a;
+  box-shadow:0 8px 18px rgba(139,107,63,.18);
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:15px;
+  margin:28px 0 13px;
+}
+
+.section-title h3{color:var(--navy);font-size:19px;}
+.section-title p{color:var(--muted);font-size:12px;margin-top:3px;}
+
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.menu-btn{
+  position:relative;
+  overflow:hidden;
+  text-align:left;
+  background:var(--paper);
+  border:1px solid #e6dcc4;
+  border-radius:19px;
+  padding:20px;
+  min-height:105px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  box-shadow:0 5px 18px rgba(139,107,63,.08);
+  transition:.35s cubic-bezier(.22,1,.36,1);
+  opacity:0;
+  animation:menuIn .6s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+.menu-btn:nth-child(1){animation-delay:.1s;}
+.menu-btn:nth-child(2){animation-delay:.18s;}
+.menu-btn:nth-child(3){animation-delay:.26s;}
+.menu-btn:nth-child(4){animation-delay:.34s;}
+.menu-btn:nth-child(5){animation-delay:.42s;}
+.menu-btn:nth-child(6){animation-delay:.50s;}
+.menu-btn:nth-child(7){animation-delay:.58s;}
+.menu-btn:nth-child(8){animation-delay:.66s;}
+
+@keyframes menuIn{
+  from{opacity:0; transform:translateY(24px) scale(.95);}
+  to{opacity:1; transform:translateY(0) scale(1);}
+}
+
+.menu-btn::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent 40%,rgba(254,44,85,.1) 50%,transparent 60%);
+  transform:translateX(-100%);
+  transition:transform .7s ease;
+}
+
+.menu-btn:hover::before{transform:translateX(100%);}
+
+.menu-btn:hover{
+  transform:translateY(-6px) rotate(-.6deg);
+  border-color:var(--tt-red);
+  box-shadow:0 18px 35px rgba(254,44,85,.25);
+}
+
+.menu-btn:active{transform:scale(.98);}
+
+/* ============================================
+   ICON MENU - SEMUA PAKAI WARNA TIKTOK
+   (Cyan → Merah → Hitam)
+   ============================================ */
+.menu-icon{
+  width:50px;
+  height:50px;
+  flex-shrink:0;
+  display:grid;
+  place-items:center;
+  border-radius:15px;
+  color:#fff;
+  font-size:23px;
+  transition:.35s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 6px 15px rgba(0,0,0,.2);
+  background:linear-gradient(135deg,#25F4EE,#FE2C55,#000);
+}
+
+.menu-btn:hover .menu-icon{
+  transform:rotate(-8deg) scale(1.12);
+  box-shadow:0 8px 22px rgba(254,44,85,.4);
+}
+
+/* Semua varian warna disatukan jadi TikTok style */
+.menu-btn.icon-blue .menu-icon,
+.menu-btn.icon-purple .menu-icon,
+.menu-btn.icon-green .menu-icon,
+.menu-btn.icon-orange .menu-icon,
+.menu-btn.icon-cyan .menu-icon,
+.menu-btn.icon-dark .menu-icon,
+.menu-btn.tiktok-btn .menu-icon,
+.menu-btn.ig-btn .menu-icon,
+.menu-btn.kenangan-btn .menu-icon{
+  background:linear-gradient(135deg,#25F4EE,#FE2C55,#000);
+  color:#fff;
+}
+
+/* Hover state semua sama */
+.menu-btn.icon-blue:hover,
+.menu-btn.icon-purple:hover,
+.menu-btn.icon-green:hover,
+.menu-btn.icon-orange:hover,
+.menu-btn.icon-cyan:hover,
+.menu-btn.icon-dark:hover,
+.menu-btn.tiktok-btn:hover,
+.menu-btn.ig-btn:hover,
+.menu-btn.kenangan-btn:hover{
+  border-color:#FE2C55;
+  box-shadow:0 18px 35px rgba(254,44,85,.25);
+}
+
+.menu-btn.icon-blue:hover::before,
+.menu-btn.icon-purple:hover::before,
+.menu-btn.icon-green:hover::before,
+.menu-btn.icon-orange:hover::before,
+.menu-btn.icon-cyan:hover::before,
+.menu-btn.icon-dark:hover::before,
+.menu-btn.tiktok-btn:hover::before,
+.menu-btn.ig-btn:hover::before,
+.menu-btn.kenangan-btn:hover::before{
+  background:linear-gradient(120deg,transparent 40%,rgba(254,44,85,.1) 50%,transparent 60%);
+}
+
+.menu-btn.icon-blue:hover .arrow,
+.menu-btn.icon-purple:hover .arrow,
+.menu-btn.icon-green:hover .arrow,
+.menu-btn.icon-orange:hover .arrow,
+.menu-btn.icon-cyan:hover .arrow,
+.menu-btn.icon-dark:hover .arrow,
+.menu-btn.tiktok-btn:hover .arrow,
+.menu-btn.ig-btn:hover .arrow,
+.menu-btn.kenangan-btn:hover .arrow{
+  color:#FE2C55;
+}
+
+.menu-content{flex:1;}
+.menu-content strong{display:block;color:var(--navy);font-size:15px;font-family:Georgia,serif;}
+.menu-content span{display:block;color:var(--muted);font-size:12px;margin-top:4px;line-height:1.4;}
+
+.arrow{color:#b8a887;font-size:21px;transition:.25s;}
+.menu-btn:hover .arrow{transform:translateX(6px);}
+
+.page-head{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  margin-bottom:22px;
+  animation:fadeDown .5s both;
+}
+
+.back-btn{
+  background:var(--paper);
+  border:1px solid #e6dcc4;
+  color:var(--navy);
+  padding:11px 15px;
+  border-radius:13px;
+  font-weight:800;
+  transition:.25s;
+  box-shadow:0 3px 10px rgba(139,107,63,.08);
+}
+
+.back-btn:hover{
+  background:var(--blue-light);
+  color:var(--blue);
+  transform:translateX(-3px);
+  border-color:#8fb5ff;
+}
+
+.page-title h2{color:var(--navy);font-size:23px;font-family:Georgia,serif;}
+.page-title p{color:var(--muted);font-size:12px;margin-top:3px;}
+
+
+.student-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:5px;
+}
+
+.student-card{
+  background:var(--paper);
+  border:1px solid #e6dcc4;
+  border-radius:18px;
+  overflow:hidden;
+  transition:.4s cubic-bezier(.22,1,.36,1);
+  box-shadow:0 5px 18px rgba(139,107,63,.1);
+  animation:cardIn .5s cubic-bezier(.22,1,.36,1) both;
+  position:relative;
+}
+
+.student-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:4px;
+  background:linear-gradient(90deg,#25F4EE,#FE2C55,#000);
+  transform:scaleX(0);
+  transition:.4s;
+  z-index:2;
+}
+
+.student-card:hover::before{transform:scaleX(1);}
+
+@keyframes cardIn{
+  from{opacity:0; transform:translateY(20px) scale(.94);}
+  to{opacity:1; transform:translateY(0) scale(1);}
+}
+
+.student-card:hover{
+  transform:translateY(-8px) rotate(.5deg);
+  box-shadow:0 22px 40px rgba(139,107,63,.25);
+  border-color:#c4a56a;
+}
+
+.student-photo{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  object-position:center 25%;
+  display:block;
+  background:linear-gradient(135deg,#dbeafe,#eff6ff);
+  transition:.5s cubic-bezier(.22,1,.36,1);
+}
+
+.student-card:hover .student-photo{transform:scale(1.06);}
+
+.student-body{padding:14px;}
+
+.absen{
+  display:inline-block;
+  font-size:10px;
+  font-weight:900;
+  color:var(--blue);
+  background:var(--blue-light);
+  border-radius:7px;
+  padding:5px 7px;
+  margin-bottom:7px;
+}
+
+.student-body h4{font-size:15px;color:var(--navy);font-family:Georgia,serif;}
+.student-body p{font-size:11px;color:var(--muted);margin-top:4px;}
+
+.detail-btn{
+  width:100%;
+  margin-top:12px;
+  padding:10px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:white;
+  border-radius:11px;
+  font-size:12px;
+  font-weight:800;
+  transition:.25s;
+  position:relative;
+  overflow:hidden;
+}
+
+.detail-btn::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,.3) 50%,transparent 60%);
+  transform:translateX(-100%);
+  transition:transform .6s;
+}
+
+.detail-btn:hover::before{transform:translateX(100%);}
+
+.detail-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 18px rgba(37,99,235,.3);
+}
+
+.org-chart-wrap{
+  padding:24px 10px 40px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+.org-chart{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-width:320px;
+  gap:0;
+  padding:10px;
+  position:relative;
+}
+
+.org-level{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  position:relative;
+  z-index:2;
+}
+
+.org-level.split-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  width:100%;
+  max-width:560px;
+}
+
+.org-node{
+  position:relative;
+  background:#fff;
+  border:1px solid #e6dcc4;
+  border-radius:16px;
+  padding:16px 22px;
+  min-width:150px;
+  text-align:center;
+  box-shadow:0 8px 22px rgba(139,107,63,.12);
+  transition:.35s cubic-bezier(.22,1,.36,1);
+  animation:orgIn .6s cubic-bezier(.22,1,.36,1) both;
+}
+
+.org-level.split-2 .org-node{
+  min-width:0;
+  width:100%;
+}
+
+@keyframes orgIn{
+  from{opacity:0; transform:translateY(18px) scale(.94);}
+  to{opacity:1; transform:translateY(0) scale(1);}
+}
+
+.org-node:hover{
+  transform:translateY(-4px);
+  border-color:#c4a56a;
+  box-shadow:0 16px 32px rgba(139,107,63,.22);
+}
+
+.org-node.highlight{
+  background:linear-gradient(135deg,#f4f7ff,#e9efff);
+  border-color:#8fb5ff;
+  box-shadow:0 12px 28px rgba(37,99,235,.18);
+}
+
+.org-node.highlight .org-name{color:var(--blue);}
+
+.org-role{
+  font-size:11.5px;
+  font-weight:800;
+  letter-spacing:.4px;
+  color:var(--muted);
+  text-transform:uppercase;
+  margin-bottom:5px;
+}
+
+.org-name{
+  font-family:Georgia,serif;
+  font-weight:700;
+  font-size:16px;
+  color:var(--navy);
+  letter-spacing:-.3px;
+}
+
+.org-line.v{
+  width:2px;
+  height:36px;
+  background:linear-gradient(180deg,#c4a56a,#e6dcc4);
+  position:relative;
+  z-index:1;
+}
+
+.org-line.v::before,
+.org-line.v::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#c4a56a;
+}
+.org-line.v::before{ top:-2px; }
+.org-line.v::after{ bottom:-2px; }
+
+.org-level.split-2::before{
+  content:"";
+  position:absolute;
+  top:-18px;
+  left:25%;
+  right:25%;
+  height:2px;
+  background:linear-gradient(90deg,transparent,#c4a56a,#c4a56a,transparent);
+  z-index:1;
+}
+
+.org-level.split-2::after{
+  content:"";
+  position:absolute;
+  top:-18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:2px;
+  height:18px;
+  background:#c4a56a;
+}
+
+.org-level.split-2 .org-node::before{
+  content:"";
+  position:absolute;
+  top:-18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:2px;
+  height:18px;
+  background:#c4a56a;
+}
+
+.piket-choose{
+  background:var(--paper);
+  border:1px solid #e6dcc4;
+  border-radius:22px;
+  padding:26px 22px;
+  text-align:center;
+  box-shadow:0 8px 26px rgba(139,107,63,.12);
+  animation:fadeUp .5s both;
+}
+
+.piket-choose-icon{
+  width:70px;
+  height:70px;
+  margin:0 auto 14px;
+  border-radius:20px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:white;
+  display:grid;
+  place-items:center;
+  font-size:30px;
+  box-shadow:0 12px 25px rgba(37,99,235,.25);
+}
+
+.piket-choose h3{
+  color:var(--navy);
+  font-size:18px;
+  font-family:Georgia,serif;
+  margin-bottom:6px;
+}
+
+.piket-choose p{
+  color:var(--muted);
+  font-size:12.5px;
+  margin-bottom:20px;
+}
+
+.piket-day-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+  max-width:760px;
+  margin:0 auto;
+}
+
+.piket-day-card{
+  position:relative;
+  overflow:hidden;
+  padding:22px 14px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#fffdf8,#fdf6e6);
+  border:1px solid #e6dcc4;
+  text-align:center;
+  transition:.35s cubic-bezier(.22,1,.36,1);
+  box-shadow:0 4px 14px rgba(139,107,63,.08);
+}
+
+.piket-day-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--blue),#60a5fa);
+  transform:scaleX(0);
+  transition:.35s;
+}
+
+.piket-day-card:hover{
+  transform:translateY(-6px) rotate(-1deg);
+  border-color:#c4a56a;
+  box-shadow:0 18px 32px rgba(139,107,63,.22);
+}
+
+.piket-day-card:hover::before{transform:scaleX(1);}
+
+.piket-day-card .day-emoji{
+  font-size:26px;
+  display:block;
+  margin-bottom:8px;
+}
+
+.piket-day-card strong{
+  display:block;
+  color:var(--navy);
+  font-size:15px;
+  font-family:Georgia,serif;
+}
+
+.piket-day-card span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+}
+
+.piket-day-panel{
+  margin-top:18px;
+  background:var(--paper);
+  border:1px solid #e6dcc4;
+  border-radius:20px;
+  padding:22px;
+  box-shadow:0 8px 26px rgba(139,107,63,.12);
+  animation:cardIn .5s cubic-bezier(.22,1,.36,1) both;
+}
+
+.piket-day-panel-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+  padding-bottom:14px;
+  border-bottom:1px dashed #e6dcc4;
+  margin-bottom:16px;
+}
+
+.piket-day-panel-head h3{
+  color:var(--navy);
+  font-size:20px;
+  font-family:Georgia,serif;
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.piket-day-panel-head .group-tag{
+  font-size:11px;
+  font-weight:900;
+  color:var(--blue);
+  background:var(--blue-light);
+  border:1px solid rgba(37,99,235,.15);
+  padding:6px 11px;
+  border-radius:999px;
+}
+
+.member-list{display:flex;flex-wrap:wrap;gap:9px;}
+
+.member{
+  padding:9px 13px;
+  border-radius:11px;
+  background:#fffdf8;
+  border:1px solid #e6dcc4;
+  font-size:12px;
+  color:#5c4526;
+  transition:.25s;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  box-shadow:0 2px 6px rgba(139,107,63,.06);
+}
+
+.member::before{content:"👤";font-size:12px;}
+
+.member:hover{
+  background:var(--blue-light);
+  border-color:#8fb5ff;
+  color:var(--blue);
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 8px 16px rgba(37,99,235,.15);
+}
+
+.piket-actions{
+  margin-top:20px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.piket-action-btn{
+  padding:11px 18px;
+  border-radius:13px;
+  background:#fffdf8;
+  border:1px solid #e6dcc4;
+  color:#5c4526;
+  font-size:12px;
+  font-weight:800;
+  transition:.25s;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+}
+
+.piket-action-btn:hover{
+  background:var(--blue-light);
+  color:var(--blue);
+  border-color:#8fb5ff;
+  transform:translateY(-2px);
+}
+
+.piket-action-btn.primary{
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:white;
+  border-color:transparent;
+  box-shadow:0 8px 18px rgba(37,99,235,.28);
+}
+
+.piket-action-btn.primary:hover{
+  color:white;
+  transform:translateY(-3px);
+  box-shadow:0 12px 26px rgba(37,99,235,.4);
+}
+
+.table-wrap{
+  overflow:auto;
+  background:var(--paper);
+  border:1px solid #e6dcc4;
+  border-radius:20px;
+  box-shadow:0 5px 18px rgba(139,107,63,.1);
+  animation:fadeUp .5s both;
+}
+
+.schedule{width:100%;border-collapse:collapse;min-width:400px;}
+
+.schedule th{
+  background:#f4ecd8;
+  color:var(--navy);
+  font-size:13px;
+  text-align:left;
+  padding:16px 18px;
+  border-bottom:1px solid #e6dcc4;
+  font-family:Georgia,serif;
+}
+
+.schedule td{
+  padding:16px 18px;
+  font-size:13px;
+  color:#4b5563;
+  border-bottom:1px solid #ede4cd;
+  transition:.2s;
+  vertical-align:top;
+}
+
+.schedule tr:last-child td{border-bottom:0;}
+.schedule tr:hover td{background:#fffdf5;}
+.schedule td:first-child{color:var(--blue);font-weight:900;font-family:Georgia,serif;font-size:14px;}
+
+.libur-note{
+  margin-top:14px;
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  background:#fff5e0;
+  border:1px dashed #e0b96a;
+  padding:10px 15px;
+  border-radius:12px;
+  color:#8a6a1e;
+  font-size:12px;
+  font-weight:700;
+  animation:fadeUp .6s both;
+}
+
+/* ===== KENANGAN KELAS (SLIDER GABUNG) ===== */
+.kenangan-wrap{
+  position:relative;
+  overflow:hidden;
+  border-radius:24px;
+  background:var(--paper);
+  border:1px solid #e6dcc4;
+  box-shadow:0 12px 35px rgba(139,107,63,.15);
+  animation:fadeUp .5s both;
+}
+
+.kenangan-header{
+  text-align:center;
+  padding:30px 24px 12px;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 29px,
+      rgba(37,99,235,.05) 30px
+    );
+}
+
+.kenangan-badge{
+  display:inline-block;
+  padding:7px 16px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#fce7f3,#fbcfe8);
+  color:#9d174d;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:12px;
+  border:1px solid #f9a8d4;
+}
+
+.kenangan-header h2{
+  font-size:clamp(24px,5vw,38px);
+  color:var(--navy);
+  font-family:Georgia,serif;
+  letter-spacing:-1px;
+  line-height:1.1;
+}
+
+.kenangan-header h2 .roman{
+  display:block;
+  font-size:0.75em;
+  color:#db2777;
+  font-style:italic;
+  margin-top:4px;
+}
+
+.kenangan-header p{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:12px;
+  line-height:1.6;
+  max-width:520px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.kenangan-slider-outer{
+  position:relative;
+  overflow:hidden;
+  padding:10px 0 0;
+}
+
+.kenangan-track{
+  display:flex;
+  transition:transform .6s cubic-bezier(.22,1,.36,1);
+  will-change:transform;
+  cursor:grab;
+  user-select:none;
+}
+
+.kenangan-track.dragging{
+  cursor:grabbing;
+  transition:none;
+}
+
+.kenangan-slide{
+  flex:0 0 100%;
+  padding:16px 26px 30px;
+}
+
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.photo-item{
+  position:relative;
+  overflow:hidden;
+  border-radius:14px;
+  aspect-ratio:1/1;
+  background:linear-gradient(135deg,#fce7f3,#fbcfe8);
+  border:1px solid #e6dcc4;
+  box-shadow:0 4px 12px rgba(139,107,63,.1);
+  transition:.4s cubic-bezier(.22,1,.36,1);
+  cursor:pointer;
+}
+
+.photo-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:.5s cubic-bezier(.22,1,.36,1);
+  display:block;
+  pointer-events:none;
+}
+
+.photo-item:hover{
+  transform:translateY(-5px) scale(1.03);
+  box-shadow:0 14px 28px rgba(139,107,63,.25);
+  z-index:2;
+}
+
+.photo-item:hover img{transform:scale(1.15);}
+
+.photo-item::after{
+  content:"🔍";
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  font-size:26px;
+  background:rgba(157,23,77,.55);
+  color:#fff;
+  opacity:0;
+  transition:.3s;
+}
+
+.photo-item:hover::after{opacity:1;}
+
+/* Navigation */
+.kenangan-nav{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+  padding:20px;
+  background:linear-gradient(135deg,#fdfaf3,#f4ecd8);
+  border-top:1px solid #e6dcc4;
+}
+
+.kenangan-nav-btn{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:#fff;
+  border:1px solid #e6dcc4;
+  color:var(--navy);
+  font-size:20px;
+  font-weight:900;
+  display:grid;
+  place-items:center;
+  transition:.3s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 4px 12px rgba(139,107,63,.12);
+}
+
+.kenangan-nav-btn:hover:not(:disabled){
+  background:linear-gradient(135deg,#ec4899,#db2777);
+  color:#fff;
+  border-color:transparent;
+  transform:scale(1.1);
+  box-shadow:0 10px 22px rgba(236,72,153,.4);
+}
+
+.kenangan-nav-btn:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
+
+.kenangan-dots{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:center;
+  max-width:60%;
+}
+
+.kenangan-dot{
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  background:#e6dcc4;
+  border:0;
+  padding:0;
+  transition:.3s cubic-bezier(.34,1.56,.64,1);
+}
+
+.kenangan-dot.active{
+  background:linear-gradient(135deg,#ec4899,#db2777);
+  width:32px;
+  border-radius:999px;
+  box-shadow:0 3px 10px rgba(236,72,153,.4);
+}
+
+.kenangan-counter{
+  text-align:center;
+  font-size:12px;
+  color:#9d174d;
+  font-weight:800;
+  letter-spacing:1px;
+  padding:0 0 14px;
+}
+
+/* Lightbox */
+.lightbox{
+  position:fixed;
+  inset:0;
+  z-index:1600;
+  background:rgba(8,19,45,.92);
+  backdrop-filter:blur(8px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.lightbox.show{display:flex;animation:fadeIn .3s ease;}
+
+.lightbox img{
+  max-width:95%;
+  max-height:85vh;
+  border-radius:14px;
+  box-shadow:0 30px 70px rgba(0,0,0,.7);
+  animation:modalIn .4s cubic-bezier(.34,1.56,.64,1);
+}
+
+.lightbox-close{
+  position:absolute;
+  top:20px;
+  right:20px;
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:rgba(255,255,255,.15);
+  color:#fff;
+  font-size:24px;
+  display:grid;
+  place-items:center;
+  transition:.3s;
+  border:1px solid rgba(255,255,255,.25);
+}
+
+.lightbox-close:hover{
+  background:#dc2626;
+  transform:rotate(90deg) scale(1.1);
+}
+
+.developer-box{
+  background:linear-gradient(135deg,var(--paper),#fffdf5);
+  border:1px solid #e6dcc4;
+  border-radius:25px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 20px 45px rgba(139,107,63,.15);
+  animation:cardIn .6s both;
+}
+
+.dev-avatar{
+  width:90px;
+  height:90px;
+  border-radius:28px;
+  margin:0 auto 16px;
+  display:grid;
+  place-items:center;
+  font-size:35px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:white;
+  box-shadow:0 12px 25px rgba(37,99,235,.2);
+  animation:logoFloat 3s ease-in-out infinite;
+}
+
+.developer-box h2{color:var(--navy);font-family:Georgia,serif;}
+
+.developer-box .role{
+  display:inline-block;
+  color:var(--blue);
+  background:var(--blue-light);
+  border-radius:999px;
+  padding:7px 12px;
+  margin-top:9px;
+  font-size:11px;
+  font-weight:900;
+}
+
+.dev-info{
+  max-width:650px;
+  margin:22px auto 0;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  text-align:left;
+}
+
+.dev-item{
+  background:white;
+  border:1px solid #e6dcc4;
+  padding:13px;
+  border-radius:13px;
+  transition:.3s;
+}
+
+.dev-item:hover{
+  transform:translateY(-3px);
+  border-color:#c4a56a;
+  box-shadow:0 10px 20px rgba(139,107,63,.15);
+}
+
+.dev-item small{color:var(--muted);font-size:10px;}
+.dev-item strong{display:block;color:var(--navy);font-size:13px;margin-top:3px;}
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:999;
+  background:rgba(8,19,45,.6);
+  backdrop-filter:blur(7px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.modal.show{display:flex;animation:fadeIn .3s ease;}
+
+.modal-box{
+  width:min(450px,100%);
+  background:var(--paper);
+  border-radius:25px;
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.35);
+  animation:modalIn .45s cubic-bezier(.34,1.56,.64,1);
+  border:1px solid #e6dcc4;
+}
+
+@keyframes modalIn{
+  from{opacity:0; transform:translateY(30px) scale(.9);}
+  to{opacity:1; transform:translateY(0) scale(1);}
+}
+
+.modal-photo{
+  width:100%;
+  height:380px;
+  object-fit:cover;
+  object-position:center 25%;
+  background:#eaf1ff;
+  display:block;
+}
+
+.modal-content{padding:20px;}
+
+.modal-top{display:flex;justify-content:space-between;gap:15px;}
+
+.modal-top h2{color:var(--navy);font-size:22px;font-family:Georgia,serif;}
+
+.close-btn{
+  width:36px;
+  height:36px;
+  border-radius:11px;
+  background:#f1f5f9;
+  color:#64748b;
+  font-size:20px;
+  transition:.25s;
+}
+
+.close-btn:hover{
+  background:#fee2e2;
+  color:#dc2626;
+  transform:rotate(90deg);
+}
+
+.detail-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+  margin-top:16px;
+}
+
+.detail-item{
+  background:#fffdf8;
+  border:1px solid #e6dcc4;
+  border-radius:12px;
+  padding:11px;
+  transition:.25s;
+}
+
+.detail-item:hover{
+  background:var(--blue-light);
+  border-color:#8fb5ff;
+}
+
+.detail-item small{display:block;color:var(--muted);font-size:9px;}
+.detail-item strong{display:block;color:var(--navy);font-size:12px;margin-top:3px;}
+
+.footer{
+  text-align:center;
+  padding:30px 10px 0;
+  color:#b8a887;
+  font-size:11px;
+  font-style:italic;
+  font-family:Georgia,serif;
+}
+
+#muteBtn{
+  position:fixed;
+  top:15px;
+  right:15px;
+  z-index:1500;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#2563eb,#173b8f);
+  color:white;
+  font-size:18px;
+  box-shadow:0 6px 16px rgba(37,99,235,.4);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  transition:.25s;
+}
+
+#muteBtn:hover{
+  transform:scale(1.1);
+  box-shadow:0 8px 22px rgba(37,99,235,.6);
+}
+
+@media(max-width:800px){
+  .student-grid{grid-template-columns:repeat(2,1fr);}
+  .hero{grid-template-columns:1fr;min-height:auto;}
+  .hero::before{display:none;}
+  .hero-page.left{border-radius:28px 28px 0 0;}
+  .hero-page.right{border-radius:0 0 28px 28px;}
+  .hero-page{padding:28px 22px;}
+  .photo-grid{grid-template-columns:repeat(3,1fr);}
+}
+
+@media(max-width:600px){
+  .view{padding:18px 13px 30px;}
+  .home-header{align-items:flex-start;}
+  .status{display:none;}
+
+  .book-3d{width:170px;height:230px;}
+  .cover-emoji{font-size:40px;}
+  .cover-title{font-size:18px;}
+
+  .menu-grid{grid-template-columns:1fr;}
+
+  .student-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .student-photo{height:180px;}
+  .student-body{padding:11px;}
+  .student-body h4{font-size:13px;}
+  .detail-btn{padding:9px 5px;}
+
+  .dev-info{grid-template-columns:1fr;}
+  .page-title h2{font-size:19px;}
+
+  .piket-day-grid{grid-template-columns:repeat(2,1fr);}
+  .piket-day-card{padding:16px 10px;}
+  .piket-day-card .day-emoji{font-size:22px;}
+
+  .org-node{padding:13px 16px;min-width:120px;}
+  .org-name{font-size:14px;}
+  .org-role{font-size:10.5px;}
+  .org-level.split-2{gap:12px;}
+  .org-line.v{height:28px;}
+
+  .open-album-btn{padding:15px 26px;font-size:14px;}
+  .intro-title{font-size:28px;}
+
+  .modal-photo{height:320px;}
+
+  .schedule th, .schedule td{padding:12px;font-size:12px;}
+
+  .kenangan-slide{padding:10px 16px 22px;}
+  .photo-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .kenangan-nav{gap:12px;padding:16px;}
+  .kenangan-dots{max-width:70%;}
+}
+
+@media(max-width:390px){
+  .student-grid{grid-template-columns:1fr;}
+  .student-photo{height:280px;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="introScreen">
+  <div class="intro-inner">
+    <div class="intro-tag">Welcome Woi Di Web Kelas IX.6</div>
+
+    <div class="book-3d">
+      <div class="book-cover">
+        <div class="book-spine"></div>
+        <div class="book-pages"></div>
+        <div class="cover-front">
+          <div class="cover-emoji">📑</div>
+          <div class="cover-sub">Kelas IX.6</div>
+          <div class="cover-title">Informasi<br>Kelas</div>
+          <div class="cover-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <h1 class="intro-title">
+      Selamat Datang di<br>
+      <span>Informasi Kelas IX.6</span>
+    </h1>
+
+<p class="intro-desc">
+  Selamat datang di profil <strong>kelas IX.6</strong>.
+  Di sini tersaji informasi lengkap tentang kelas kami —
+  mulai dari perangkat kelas, data siswa, kegiatan piket. Semoga menjadi dokumentasi yang bermanfaat bagi kita semua.
+</p>
+
+    <button class="open-album-btn" onclick="bukaAlbum()">
+      <span class="btn-icon">📖</span>
+      <span>Buka Informasi Kelas</span>
+      <span class="btn-arrow">→</span>
+    </button>
+
+    <p class="intro-hint">✦ Klik untuk membuka ✦</p>
+  </div>
+</div>
+
+
+<!-- TOMBOL MUTE BGM -->
+<button id="muteBtn" onclick="toggleMute()" title="On/Off Musik">🔊</button>
+
+
+<div class="app">
+
+<!-- HOME -->
+<section class="view active" id="homeView">
+  <div class="container">
+
+    <header class="home-header">
+      <div class="brand">
+        <div class="logo">📖</div>
+        <div>
+          <h1>Website Kelas IX.6</h1>
+          <p>Mencakup Semua Daftar Siswa Dan Perangkat Kelas</p>
+        </div>
+      </div>
+      <div class="status"><span></span> Aktif</div>
+    </header>
+
+    <div class="hero">
+      <div class="hero-page left">
+        <div class="hero-badge">📚 SMPN 38 PALEMBANG</div>
+        <h2>Informasi Kelas<br><span>IX.6</span></h2>
+        <p>
+          Semua informasi kelas tersimpan rapi dalam
+          satu website. Data siswa, perangkat kelas, jadwal
+          piket, jadwal pelajaran.
+        </p>
+        <div class="hero-quote">
+          "Buku adalah jendela dunia,<br>
+          dan kelas adalah rumah kedua kita."
+          <small>— Kata-Kata Kelas IX.6</small>
+        </div>
+      </div>
+
+      <div class="hero-page right">
+        <div class="school-info" style="margin-top:0">
+          <div class="info-pill">🏫 SMPN 38 PALEMBANG</div>
+          <div class="info-pill">📘 Kelas IX.6</div>
+          <div class="info-pill">📅 Tahun Ajaran 2026/2027</div>
+          <div class="info-pill">👥 Total Siswa 36</div>
+        </div>
+        <p style="margin-top:20px">
+          Buka semua button di bawah untuk melihat informasi kelas ini.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <div>
+        <h3>📑 Berikut Informasi Detail</h3>
+        <p>Pencet untuk membuka</p>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+      <button class="menu-btn icon-blue" onclick="showView('students')">
+        <div class="menu-icon">👨‍🎓</div>
+        <div class="menu-content">
+          <strong>Data Siswa</strong>
+          <span>Siswa Ganteng/Cantik Nihh Boss</span>
+        </div>
+        <div class="arrow">›</div>
+      </button>
+
+      <button class="menu-btn icon-purple" onclick="showView('structure')">
+        <div class="menu-icon">👑</div>
+        <div class="menu-content">
+          <strong>Perangkat Kelas</strong>
+          <span>Pengurus dan pembagian tugas kelas</span>
+        </div>
+        <div class="arrow">›</div>
+      </button>
+
+      <button class="menu-btn icon-green" onclick="showView('piket')">
+        <div class="menu-icon">🧹</div>
+        <div class="menu-content">
+          <strong>Jadwal Piket</strong>
+          <span>Jadwal piket Senin–Jumat</span>
+        </div>
+        <div class="arrow">›</div>
+      </button>
+
+      <button class="menu-btn icon-orange" onclick="showView('schedule')">
+        <div class="menu-icon">📚</div>
+        <div class="menu-content">
+          <strong>Jadwal Pelajaran</strong>
+          <span>Jadwal pelajaran Senin–Jumat</span>
+        </div>
+        <div class="arrow">›</div>
+      </button>
+
+      <!-- BUTTON TIKTOK -->
+      <button class="menu-btn tiktok-btn" onclick="openTikTok()">
+        <div class="menu-icon">🎵</div>
+        <div class="menu-content">
+          <strong>TikTok IX.6</strong>
+          <span>Klik untuk buka TikTok kelas kami</span>
+        </div>
+        <div class="arrow">›</div>
+      </button>
+
+      <!-- BUTTON INSTAGRAM -->
+      <button class="menu-btn ig-btn" onclick="openInstagram()">
+        <div class="menu-icon">📸</div>
+        <div class="menu-content">
+          <strong>Instagram IX.6</strong>
+          <span>Klik untuk buka Instagram kelas kami</span>
+        </div>
+        <div class="arrow">›</div>
+      </button>
+
+      <!-- BUTTON KENANGAN KELAS -->
+      <button class="menu-btn kenangan-btn" onclick="showView('kenangan')">
+        <div class="menu-icon">📷</div>
+        <div class="menu-content">
+          <strong>Kenangan Kelas</strong>
+          <span>Slide foto kenangan kelas kami</span>
+        </div>
+        <div class="arrow">›</div>
+      </button>
+
+      <button class="menu-btn icon-dark" onclick="showView('developer')">
+        <div class="menu-icon">💻</div>
+        <div class="menu-content">
+          <strong>Developer</strong>
+          <span>Informasi pembuat website kelas</span>
+        </div>
+        <div class="arrow">›</div>
+      </button>
+    </div>
+
+    <div class="footer">
+      ✦ INFORMASI KELAS IX.6 • SMPN 38 PALEMBANG ✦
+    </div>
+
+  </div>
+</section>
+
+
+<!-- DATA SISWA -->
+<section class="view" id="studentsView">
+  <div class="container">
+
+    <div class="page-head">
+      <button class="back-btn" onclick="showView('home')">← Kembali</button>
+      <div class="page-title">
+        <h2>Data Siswa</h2>
+        <p>Daftar lengkap siswa kelas • Absen 01–36</p>
+      </div>
+    </div>
+
+    <div class="student-grid" id="studentGrid"></div>
+
+  </div>
+</section>
+
+
+<!-- STRUKTUR -->
+<section class="view" id="structureView">
+  <div class="container">
+
+    <div class="page-head">
+      <button class="back-btn" onclick="showView('home')">← Kembali</button>
+      <div class="page-title">
+        <h2>Struktur Kelas</h2>
+        <p>Kelas IX.6 • Susunan pengurus kelas</p>
+      </div>
+    </div>
+
+    <div class="org-chart-wrap">
+      <div class="org-chart">
+
+        <!-- WALI KELAS -->
+        <div class="org-level">
+          <div class="org-node">
+            <div class="org-role">Wali Kelas</div>
+            <div class="org-name">Bu Kurnia Lestari</div>
+          </div>
+        </div>
+
+        <div class="org-line v"></div>
+
+<!-- KETUA & WAKIL -->
+<div class="org-level split-2">
+  <div class="org-node">
+    <div class="org-role">Ketua Kelas</div>
+    <div class="org-name">M. Ilham Kurniawan</div>
+  </div>
+  <div class="org-node">
+    <div class="org-role">Wakil Ketua</div>
+    <div class="org-name">Chalista rezky Aulia</div>
+  </div>
+</div>
+
+        <div class="org-line v"></div>
+
+        <!-- SEKRETARIS 1 & 2 -->
+        <div class="org-level split-2">
+          <div class="org-node">
+            <div class="org-role">Sekretaris 1</div>
+            <div class="org-name">Aprilia Wahyuni Safitri</div>
+          </div>
+          <div class="org-node">
+            <div class="org-role">Sekretaris 2</div>
+            <div class="org-name">Dhelila Theresia Wairata</div>
+          </div>
+        </div>
+
+        <div class="org-line v"></div>
+
+        <!-- BENDAHARA 1 & 2 -->
+        <div class="org-level split-2">
+          <div class="org-node">
+            <div class="org-role">Bendahara 1</div>
+            <div class="org-name">Syaqinna Ramadhani</div>
+          </div>
+          <div class="org-node">
+            <div class="org-role">Bendahara 2</div>
+            <div class="org-name">Nadira Ramadhani</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- PIKET -->
+<section class="view" id="piketView">
+  <div class="container">
+
+    <div class="page-head">
+      <button class="back-btn" onclick="showView('home')">← Kembali</button>
+      <div class="page-title">
+        <h2>Jadwal Piket</h2>
+        <p>Daftar petugas piket per hari</p>
+      </div>
+    </div>
+
+    <div class="piket-choose" id="piketChoose">
+      <div class="piket-choose-icon">🧹</div>
+      <h3>Pilih Hari Piket</h3>
+      <p>Klik salah satu hari untuk melihat daftar piketnya</p>
+
+      <div class="piket-day-grid" id="piketDayGrid"></div>
+    </div>
+
+    <div id="piketDetailWrap" style="display:none"></div>
+
+  </div>
+</section>
+
+
+<!-- JADWAL PELAJARAN (SIMPLE) -->
+<section class="view" id="scheduleView">
+  <div class="container">
+
+    <div class="page-head">
+      <button class="back-btn" onclick="showView('home')">← Kembali</button>
+      <div class="page-title">
+        <h2>Jadwal Pelajaran</h2>
+        <p>Daftar mata pelajaran per hari</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="schedule">
+        <thead>
+          <tr>
+            <th style="width:120px;">Hari</th>
+            <th>Mata Pelajaran</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Senin</td>
+            <td>Matematika, Seni Budaya, PAI</td>
+          </tr>
+          <tr>
+            <td>Selasa</td>
+            <td>Bahasa Indonesia, IPS, TIK, IPA, P. Pancasila</td>
+          </tr>
+          <tr>
+            <td>Rabu</td>
+            <td>Bahasa Indonesia, TIK, IPA, Bahasa Inggris</td>
+          </tr>
+          <tr>
+            <td>Kamis</td>
+            <td>Bahasa Inggris, IPS, PJOK, P. Pancasila</td>
+          </tr>
+          <tr>
+            <td>Jumat</td>
+            <td>Matematika, B. Daerah, Pramuka</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="libur-note">
+      🌴 Sabtu &amp; Minggu Libur
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ===== KENANGAN KELAS (SLIDER GABUNG) ===== -->
+<section class="view" id="kenanganView">
+  <div class="container">
+
+    <div class="page-head">
+      <button class="back-btn" onclick="showView('home')">← Kembali</button>
+      <div class="page-title">
+        <h2>Kenangan Kelas</h2>
+        <p>Geser ke kiri/kanan untuk lihat foto kenangan</p>
+      </div>
+    </div>
+
+    <div class="kenangan-wrap">
+
+      <div class="kenangan-header">
+        <div class="kenangan-badge">✦ KENANGAN KELAS IX.6 ✦</div>
+        <h2>
+          Momen Terindah
+          <span class="roman">— Bersama Selamanya —</span>
+        </h2>
+        <p>
+          Kumpulan foto kenangan kelas kami. Setiap slide berisi
+          momen-momen seru dan tak terlupakan selama di bangku SMP.
+        </p>
+      </div>
+
+      <div class="kenangan-slider-outer" id="kenanganOuter">
+        <div class="kenangan-track" id="kenanganTrack"></div>
+      </div>
+
+      <div class="kenangan-counter" id="kenanganCounter">Halaman 1</div>
+
+      <div class="kenangan-nav">
+        <button class="kenangan-nav-btn" id="prevBtn" onclick="slideKenangan(-1)" aria-label="Sebelumnya">‹</button>
+        <div class="kenangan-dots" id="kenanganDots"></div>
+        <button class="kenangan-nav-btn" id="nextBtn" onclick="slideKenangan(1)" aria-label="Selanjutnya">›</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- DEVELOPER -->
+<section class="view" id="developerView">
+  <div class="container">
+
+    <div class="page-head">
+      <button class="back-btn" onclick="showView('home')">← Kembali</button>
+      <div class="page-title">
+        <h2>Developer</h2>
+        <p>Informasi pembuat website</p>
+      </div>
+    </div>
+
+    <div class="developer-box">
+      <div class="dev-avatar">💻</div>
+      <h2>Rizky Akbar Maulana</h2>
+      <div class="role">Pengembang Website</div>
+
+      <div class="dev-info">
+        <div class="dev-item"><small>Nama</small><strong>Rizky Akbar Maulana</strong></div>
+        <div class="dev-item"><small>Project</small><strong>Informasi Kelas</strong></div>
+        <div class="dev-item"><small>Sekolah</small><strong>SMPN 38 PALEMBANG</strong></div>
+        <div class="dev-item"><small>Tahun</small><strong>2026/2027</strong></div>
+        <div class="dev-item"><small>Teknologi</small><strong>HTML • CSS • JavaScript</strong></div>
+        <div class="dev-item"><small>Versi</small><strong>1.0</strong></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</div>
+
+
+<!-- MODAL SISWA -->
+<div class="modal" id="studentModal">
+  <div class="modal-box">
+    <img class="modal-photo" id="modalPhoto" src="" alt="Foto siswa">
+    <div class="modal-content">
+      <div class="modal-top">
+        <div><h2 id="modalName">Nama Siswa</h2></div>
+        <button class="close-btn" onclick="closeModal()" aria-label="Tutup">×</button>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-item"><small>No. Absen</small><strong id="modalAbsen">01</strong></div>
+        <div class="detail-item"><small>Kelas</small><strong>IX</strong></div>
+        <div class="detail-item"><small>Hari Piket</small><strong id="modalDay">Senin</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- LIGHTBOX FOTO KENANGAN -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event, true)" aria-label="Tutup">×</button>
+  <img id="lightboxImg" src="" alt="Foto kenangan">
+</div>
+
+
+<!-- BGM AUDIO -->
+<audio id="bgm" loop preload="auto">
+  <source src="https://files.catbox.moe/z7i48n.mp3" type="audio/mpeg">
+</audio>
+
+
+<script>
+
+function bukaAlbum(){
+  const intro = document.getElementById("introScreen");
+  intro.classList.add("hide");
+  window.scrollTo({top:0, behavior:"instant"});
+  setTimeout(()=>{ intro.style.display = "none"; }, 900);
+
+  const bgm = document.getElementById("bgm");
+  bgm.volume = 0.5;
+  bgm.play().then(()=>{
+    document.getElementById("muteBtn").style.display = "flex";
+  }).catch(err => {
+    console.log("Audio gagal autoplay:", err);
+    document.getElementById("muteBtn").style.display = "flex";
+  });
+}
+
+function toggleMute(){
+  const bgm = document.getElementById("bgm");
+  const btn = document.getElementById("muteBtn");
+  if(bgm.paused){
+    bgm.play();
+    btn.textContent = "🔊";
+  } else {
+    bgm.pause();
+    btn.textContent = "🔇";
+  }
+}
+
+function openTikTok(){
+  window.open("https://www.tiktok.com/@ninesix.tipan", "_blank");
+}
+
+function openInstagram(){
+  window.open("https://www.instagram.com/ninetysix.active", "_blank");
+}
+
+/* ============================================
+   FOTO KENANGAN KELAS (GABUNG SEMUA)
+   Ganti link di bawah sesuai foto kalian
+   ============================================ */
+const PHOTOS_KENANGAN = [
+  "https://files.catbox.moe/te2o2m.jpg",
+  "https://files.catbox.moe/amcx28.jpg",
+  "https://files.catbox.moe/him64z.jpg",
+  "https://files.catbox.moe/x93bj2.jpg",
+  "https://files.catbox.moe/8tp572.jpg",
+  "https://files.catbox.moe/qeaw0l.jpg",
+  "https://files.catbox.moe/1t9ga7.jpg",
+  "https://files.catbox.moe/isw236.jpg",
+  "https://files.catbox.moe/4lj04v.jpg"
+];
+
+const PHOTOS_PER_SLIDE = 9; // 9 foto per halaman (grid 3x3)
+
+let kenanganIndex = 0;
+let kenanganTotalSlides = 0;
+
+function initKenangan(){
+  const track = document.getElementById("kenanganTrack");
+  if(!track) return;
+
+  // Bagi jadi beberapa slide
+  const slides = [];
+  for(let i = 0; i < PHOTOS_KENANGAN.length; i += PHOTOS_PER_SLIDE){
+    slides.push(PHOTOS_KENANGAN.slice(i, i + PHOTOS_PER_SLIDE));
+  }
+  kenanganTotalSlides = slides.length;
+
+  track.innerHTML = slides.map((slidePhotos, slideIdx) => `
+    <div class="kenangan-slide">
+      <div class="photo-grid">
+        ${slidePhotos.map((src, i) => `
+          <div class="photo-item" onclick="openLightbox('${src}')">
+            <img src="${src}" alt="Foto kenangan" loading="lazy"
+              onerror="this.src='https://ui-avatars.com/api/?name=Foto+${slideIdx*PHOTOS_PER_SLIDE+i+1}&background=ec4899&color=fff&size=400'">
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+
+  // Dots
+  const dotsWrap = document.getElementById("kenanganDots");
+  dotsWrap.innerHTML = Array.from({length: kenanganTotalSlides}).map((_, i) => `
+    <button class="kenangan-dot ${i===0?'active':''}" onclick="goKenangan(${i})" aria-label="Halaman ${i+1}"></button>
+  `).join("");
+
+  // Reset index
+  kenanganIndex = 0;
+  updateKenanganSlide();
+  initKenanganDrag();
+}
+
+function updateKenanganSlide(){
+  const track = document.getElementById("kenanganTrack");
+  track.style.transform = `translateX(-${kenanganIndex * 100}%)`;
+
+  document.querySelectorAll(".kenangan-dot").forEach((d, i) => {
+    d.classList.toggle("active", i === kenanganIndex);
+  });
+
+  document.getElementById("prevBtn").disabled = (kenanganIndex === 0);
+  document.getElementById("nextBtn").disabled = (kenanganIndex === kenanganTotalSlides - 1);
+
+  const counter = document.getElementById("kenanganCounter");
+  if(counter){
+    counter.textContent = `Halaman ${kenanganIndex + 1} dari ${kenanganTotalSlides}`;
+  }
+}
+
+function slideKenangan(dir){
+  const next = kenanganIndex + dir;
+  if(next < 0 || next >= kenanganTotalSlides) return;
+  kenanganIndex = next;
+  updateKenanganSlide();
+}
+
+function goKenangan(i){
+  kenanganIndex = i;
+  updateKenanganSlide();
+}
+
+/* ===== Drag Support (geser pakai mouse/touch) ===== */
+function initKenanganDrag(){
+  const track = document.getElementById("kenanganTrack");
+  const outer = document.getElementById("kenanganOuter");
+  if(!track || !outer) return;
+
+  let startX = 0, currentX = 0, isDragging = false;
+
+  function getX(e){
+    return e.touches ? e.touches[0].clientX : e.clientX;
+  }
+
+  function onStart(e){
+    // jangan drag kalo ada foto yang lagi diklik (biar gak ganggu lightbox)
+    isDragging = true;
+    startX = getX(e);
+    currentX = startX;
+    track.classList.add("dragging");
+  }
+
+  function onMove(e){
+    if(!isDragging) return;
+    currentX = getX(e);
+  }
+
+  function onEnd(){
+    if(!isDragging) return;
+    isDragging = false;
+    track.classList.remove("dragging");
+
+    const diff = currentX - startX;
+    const threshold = 50;
+
+    if(diff < -threshold && kenanganIndex < kenanganTotalSlides - 1){
+      kenanganIndex++;
+      updateKenanganSlide();
+    } else if(diff > threshold && kenanganIndex > 0){
+      kenanganIndex--;
+      updateKenanganSlide();
+    } else {
+      updateKenanganSlide();
+    }
+  }
+
+  // Mouse
+  outer.addEventListener("mousedown", onStart);
+  window.addEventListener("mousemove", onMove);
+  window.addEventListener("mouseup", onEnd);
+
+  // Touch
+  outer.addEventListener("touchstart", onStart, {passive:true});
+  outer.addEventListener("touchmove", onMove, {passive:true});
+  outer.addEventListener("touchend", onEnd);
+
+  // Prevent image drag default
+  outer.addEventListener("dragstart", e => e.preventDefault());
+}
+
+/* Lightbox */
+function openLightbox(src){
+  const lb = document.getElementById("lightbox");
+  document.getElementById("lightboxImg").src = src;
+  lb.classList.add("show");
+}
+
+function closeLightbox(e, force){
+  if(force || (e && e.target.id === "lightbox")){
+    document.getElementById("lightbox").classList.remove("show");
+  }
+}
+
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape"){
+    closeLightbox(null, true);
+    closeModal();
+  }
+  // Panah keyboard untuk slider kenangan
+  if(document.getElementById("kenanganView").classList.contains("active")){
+    if(e.key === "ArrowRight") slideKenangan(1);
+    if(e.key === "ArrowLeft") slideKenangan(-1);
+  }
+});
+
+const students = [
+  {no:1,  name:"Abdillah Ahmad",           photo:"https://files.catbox.moe/eaiyoi.jpg", day:"Senin"},
+  {no:2,  name:"Achmad Azzam A.",         photo:"https://files.catbox.moe/j4bfu5.jpg", day:"Senin"},
+  {no:3,  name:"Aisya Nanda Sari",         photo:"https://files.catbox.moe/bx26lg.jpg", day:"Senin"},
+  {no:4,  name:"Amanda Kirania",           photo:"https://files.catbox.moe/5bsap3.jpg", day:"Senin"},
+  {no:5,  name:"Anisa Adelia S.",          photo:"https://files.catbox.moe/631kl9.jpg", day:"Jumat"},
+  {no:6,  name:"Aprilia Wahyuni S.",       photo:"https://files.catbox.moe/rayypv.jpg", day:"Jumat"},
+  {no:7,  name:"Chalista Rezky A.",        photo:"https://files.catbox.moe/aj6qxn.jpg", day:"Kamis"},
+
+  {no:8,  name:"Dhelila Theresia W.",       photo:"https://files.catbox.moe/7tpbbl.jpg", day:"Selasa"},
+  {no:9,  name:"Dimas Aldiansyah",         photo:"https://files.catbox.moe/8lng17.jpg", day:"Jumat"},
+  {no:10, name:"Fahri Gunawan",            photo:"https://files.catbox.moe/hhmb1h.jpg", day:"Kamis"},
+  {no:11, name:"Humayroh",                 photo:"https://files.catbox.moe/u1h31v.jpg", day:"Rabu"},
+  {no:12, name:"Iquel Dewa Putra",         photo:"https://files.catbox.moe/sxuun5.jpg", day:"Kamis"},
+  {no:13, name:"Abi Febriansyah",          photo:"https://files.catbox.moe/zo1lfi.jpg", day:"Kamis"},
+  {no:14, name:"M. Daffa Alfarizi",        photo:"https://files.catbox.moe/xe4yaa.jpg", day:"Selasa"},
+
+  {no:15, name:"Fachri Alamsyah",          photo:"https://files.catbox.moe/2huuw4.jpg", day:"Selasa"},
+  {no:16, name:"Indra Syahputra",          photo:"https://files.catbox.moe/v2v7lm.jpg", day:"Selasa"},
+  {no:17, name:"M. Faizuddin",             photo:"https://files.catbox.moe/pe9xvj.jpg", day:"Rabu"},
+  {no:18, name:"M. Ilham Kurniawan",       photo:"https://files.catbox.moe/szjxlg.jpg", day:"Rabu"},
+  {no:19, name:"M. Rasya Imam A.",         photo:"https://files.catbox.moe/mver4f.jpg", day:"Rabu"},
+  {no:20, name:"Mutiara Adira",            photo:"https://files.catbox.moe/28rmj7.jpg", day:"Rabu"},
+  {no:21, name:"Nabila Zalfalia",          photo:"https://files.catbox.moe/c5kh04.jpg", day:"Selasa"},
+
+  {no:22, name:"Nadira Ramadhani",         photo:"https://files.catbox.moe/qg3svq.jpg", day:"Rabu"},
+  {no:23, name:"Naura Queensaqlia",        photo:"https://files.catbox.moe/t8fiu0.jpg", day:"Selasa"},
+  {no:24, name:"Putri Irene Ambarita",     photo:"https://files.catbox.moe/x834gg.jpg", day:"Kamis"},
+  {no:25, name:"RM. Zidan S.",             photo:"https://files.catbox.moe/i27sdl.jpg", day:"Jumat"},
+  {no:26, name:"Rafif Wijaya",             photo:"https://files.catbox.moe/wk1eua.jpg", day:"Jumat"},
+  {no:27, name:"Reyhan Handoyo",           photo:"https://files.catbox.moe/k7mu5m.jpg", day:"Rabu"},
+  {no:28, name:"Rhicinta Aisyah S.",       photo:"https://files.catbox.moe/kck7a2.jpg", day:"Selasa"},
+
+  {no:29, name:"Rizky Akbar M.",           photo:"https://files.catbox.moe/1lnq5d.jpg", day:"Senin"},
+  {no:30, name:"Safiq Maizar",             photo:"https://files.catbox.moe/7b4t03.jpg", day:"Selasa"},
+  {no:31, name:"Siti Nur Tririzky",        photo:"https://files.catbox.moe/8xhqnk.jpg", day:"Kamis"},
+  {no:32, name:"Sofia Latifah",            photo:"https://files.catbox.moe/hxf9ej.jpg", day:"Kamis"},
+  {no:33, name:"Syaqinna Ramadhani",       photo:"https://files.catbox.moe/hqf4cn.jpg", day:"Jumat"},
+  {no:34, name:"Tisya shafa A.A.",         photo:"https://files.catbox.moe/nb9lib.jpg", day:"Jumat"},
+  {no:35, name:"Yuanita Trihapsari",       photo:"https://files.catbox.moe/xz9qcz.jpg", day:"Senin"},
+  {no:36, name:"Zahra Nur Indah",          photo:"https://files.catbox.moe/kkr30e.jpg", day:"Senin"}
+];
+
+function showView(viewName, fromPopState = false){
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+
+  const target = document.getElementById(viewName + "View");
+  if(target) target.classList.add("active");
+
+  if(viewName === "students") renderStudents();
+  if(viewName === "piket") resetPiketPage();
+  if(viewName === "kenangan") initKenangan();
+
+  closeModal();
+  closeLightbox(null, true);
+  window.scrollTo({top:0, behavior:"smooth"});
+
+  if(!fromPopState && viewName !== "home"){
+    history.pushState({view: viewName}, "", "#" + viewName);
+  }
+}
+
+window.addEventListener("popstate", function(event){
+  if(!event.state || event.state.view === "home"){
+    document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+    document.getElementById("homeView").classList.add("active");
+    closeModal();
+    closeLightbox(null, true);
+    window.scrollTo({top:0, behavior:"smooth"});
+  } else {
+    showView(event.state.view, true);
+  }
+});
+
+function renderStudents(){
+  const grid = document.getElementById("studentGrid");
+
+  grid.innerHTML = students.map((student, index) => {
+    const number = String(student.no).padStart(2,"0");
+    return `
+      <article class="student-card" style="animation-delay:${index * 0.03}s">
+        <img class="student-photo" src="${student.photo}" alt="Foto ${student.name}" loading="lazy"
+          onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(student.name)}&background=2563eb&color=fff&size=400'">
+        <div class="student-body">
+          <div class="absen">ABSEN ${number}</div>
+          <h4>${student.name}</h4>
+          <p>Piket hari ${student.day}</p>
+          <button class="detail-btn" onclick="openStudent(${student.no})">Lihat Detail</button>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+function openStudent(no){
+  const student = students.find(s => s.no === no);
+  if(!student) return;
+
+  const img = document.getElementById("modalPhoto");
+  img.src = student.photo;
+  img.onerror = function(){
+    this.src = "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.name) + "&background=2563eb&color=fff&size=400";
+  };
+
+  document.getElementById("modalName").textContent  = student.name;
+  document.getElementById("modalAbsen").textContent = String(student.no).padStart(2,"0");
+  document.getElementById("modalDay").textContent   = student.day;
+
+  document.getElementById("studentModal").classList.add("show");
+}
+
+function closeModal(){
+  document.getElementById("studentModal").classList.remove("show");
+}
+
+document.getElementById("studentModal").addEventListener("click", function(e){
+  if(e.target === this) closeModal();
+});
+
+const HARI_PIKET = [
+  {day:"Senin",  emoji:"📘", info:"Awal pekan, siap semangat!"},
+  {day:"Selasa", emoji:"📗", info:"Selasa ceria, sapu bersih!"},
+  {day:"Rabu",   emoji:"📙", info:"Pertengahan pekan, tetap rajin!"},
+  {day:"Kamis",  emoji:"📕", info:"Kamis bersih, belajar nyaman!"},
+  {day:"Jumat",  emoji:"📓", info:"Akhir pekan, piket tuntas!"}
+];
+
+const piketData = HARI_PIKET.map(h => ({
+  day: h.day,
+  emoji: h.emoji,
+  info: h.info,
+  members: students.filter(s => s.day === h.day).map(s => s.name)
+}));
+
+function resetPiketPage(){
+  document.getElementById("piketChoose").style.display = "block";
+  document.getElementById("piketDetailWrap").style.display = "none";
+  document.getElementById("piketDetailWrap").innerHTML = "";
+  renderPiketDayGrid();
+}
+
+function renderPiketDayGrid(){
+  const grid = document.getElementById("piketDayGrid");
+
+  grid.innerHTML = piketData.map(h => `
+    <button class="piket-day-card" onclick="openPiketDay('${h.day}')">
+      <span class="day-emoji">${h.emoji}</span>
+      <strong>${h.day}</strong>
+      <span>${h.members.length} orang</span>
+    </button>
+  `).join("");
+}
+
+function openPiketDay(day){
+  const data = piketData.find(h => h.day === day);
+  if(!data) return;
+
+  const wrap = document.getElementById("piketDetailWrap");
+  const memberHTML = data.members.map(m => `<span class="member">${m}</span>`).join("");
+
+  wrap.innerHTML = `
+    <div class="piket-day-panel">
+      <div class="piket-day-panel-head">
+        <h3>${data.emoji} ${data.day}</h3>
+        <span class="group-tag">${data.members.length} orang</span>
+      </div>
+      <p style="color:var(--muted);font-size:12.5px;margin-bottom:14px">${data.info}</p>
+      <div class="member-list">${memberHTML}</div>
+      <div class="piket-actions">
+        <button class="piket-action-btn primary" onclick="resetPiketPage()">← Pilih Hari Lain</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("piketChoose").style.display = "none";
+  wrap.style.display = "block";
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+renderStudents();
+
+</script>
+
+</body>
+</html>
