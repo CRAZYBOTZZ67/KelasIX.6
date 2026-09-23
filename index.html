@@ -407,6 +407,156 @@ button{border:0;cursor:pointer;}
   animation:fadeUp .8s .6s both;
 }
 
+/* ===== LOADING SCREEN ===== */
+#loadingScreen{
+  position:fixed;
+  inset:0;
+  z-index:1900;
+  display:none;
+  place-items:center;
+  background:
+    radial-gradient(circle at 50% 50%, #1e3a8a 0%, #0b1220 55%, #050a18 100%);
+  overflow:hidden;
+}
+
+#loadingScreen.show{
+  display:grid;
+  animation:fadeIn .3s ease;
+}
+
+#loadingScreen.hide{
+  animation:loadingFadeOut .6s ease forwards;
+}
+
+@keyframes loadingFadeOut{
+  to{opacity:0; visibility:hidden;}
+}
+
+.loading-inner{
+  text-align:center;
+  width:min(400px,85vw);
+  animation:loadingIn .5s cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes loadingIn{
+  from{opacity:0; transform:translateY(20px) scale(.95);}
+  to{opacity:1; transform:translateY(0) scale(1);}
+}
+
+.loading-logo{
+  width:90px;
+  height:90px;
+  margin:0 auto 22px;
+  border-radius:24px;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  display:grid;
+  place-items:center;
+  font-size:42px;
+  box-shadow:
+    0 15px 40px rgba(37,99,235,.5),
+    0 0 60px rgba(37,99,235,.3);
+  animation:loadingLogo 2s ease-in-out infinite;
+}
+
+@keyframes loadingLogo{
+  0%,100%{transform:scale(1) rotate(0deg);}
+  50%{transform:scale(1.08) rotate(-4deg);}
+}
+
+.loading-title{
+  color:#fff;
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:.5px;
+  margin-bottom:8px;
+  animation:fadeUp .6s .1s both;
+}
+
+.loading-title span{
+  background:linear-gradient(135deg,#60a5fa,#93c5fd,#dbeafe);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.loading-sub{
+  color:#94a3b8;
+  font-size:12.5px;
+  letter-spacing:1px;
+  margin-bottom:26px;
+  animation:fadeUp .6s .2s both;
+}
+
+.loading-bar-wrap{
+  width:100%;
+  height:8px;
+  background:rgba(96,165,250,.15);
+  border-radius:999px;
+  overflow:hidden;
+  position:relative;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.3);
+  animation:fadeUp .6s .3s both;
+}
+
+.loading-bar{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#25F4EE,#2563eb,#FE2C55);
+  background-size:200% 100%;
+  box-shadow:0 0 12px rgba(37,99,235,.6);
+  transition:width .25s ease;
+  animation:barShine 2s linear infinite;
+}
+
+@keyframes barShine{
+  0%{background-position:0% 0%;}
+  100%{background-position:200% 0%;}
+}
+
+.loading-percent{
+  display:block;
+  margin-top:14px;
+  color:#60a5fa;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:2px;
+  font-family:monospace;
+  animation:fadeUp .6s .4s both;
+}
+
+.loading-dots{
+  margin-top:20px;
+  display:flex;
+  justify-content:center;
+  gap:8px;
+}
+
+.loading-dots span{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#2563eb;
+  animation:dotBounce 1.4s ease-in-out infinite;
+}
+
+.loading-dots span:nth-child(1){animation-delay:0s;}
+.loading-dots span:nth-child(2){animation-delay:.2s;}
+.loading-dots span:nth-child(3){animation-delay:.4s;}
+
+@keyframes dotBounce{
+  0%,80%,100%{
+    transform:scale(.6);
+    opacity:.4;
+    background:#2563eb;
+  }
+  40%{
+    transform:scale(1.2);
+    opacity:1;
+    background:#FE2C55;
+  }
+}
+
 .view{
   display:none;
   min-height:100vh;
@@ -750,7 +900,6 @@ button{border:0;cursor:pointer;}
 
 /* ============================================
    ICON MENU - SEMUA PAKAI WARNA TIKTOK
-   (Cyan → Merah → Hitam)
    ============================================ */
 .menu-icon{
   width:50px;
@@ -771,7 +920,6 @@ button{border:0;cursor:pointer;}
   box-shadow:0 8px 22px rgba(254,44,85,.4);
 }
 
-/* Semua varian warna disatukan jadi TikTok style */
 .menu-btn.icon-blue .menu-icon,
 .menu-btn.icon-purple .menu-icon,
 .menu-btn.icon-green .menu-icon,
@@ -785,7 +933,6 @@ button{border:0;cursor:pointer;}
   color:#fff;
 }
 
-/* Hover state semua sama */
 .menu-btn.icon-blue:hover,
 .menu-btn.icon-purple:hover,
 .menu-btn.icon-green:hover,
@@ -1838,6 +1985,9 @@ button{border:0;cursor:pointer;}
   .photo-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
   .kenangan-nav{gap:12px;padding:16px;}
   .kenangan-dots{max-width:70%;}
+
+  .loading-logo{width:74px;height:74px;font-size:34px;}
+  .loading-title{font-size:17px;}
 }
 
 @media(max-width:390px){
@@ -1885,6 +2035,25 @@ button{border:0;cursor:pointer;}
     </button>
 
     <p class="intro-hint">✦ Klik untuk membuka ✦</p>
+  </div>
+</div>
+
+
+<!-- LOADING SCREEN -->
+<div id="loadingScreen">
+  <div class="loading-inner">
+    <div class="loading-logo">📖</div>
+    <h2 class="loading-title">Memuat <span>Informasi Kelas</span></h2>
+    <p class="loading-sub">Mohon tunggu sebentar...</p>
+
+    <div class="loading-bar-wrap">
+      <div class="loading-bar" id="loadingBar"></div>
+    </div>
+    <span class="loading-percent" id="loadingPercent">0%</span>
+
+    <div class="loading-dots">
+      <span></span><span></span><span></span>
+    </div>
   </div>
 </div>
 
@@ -2082,7 +2251,7 @@ button{border:0;cursor:pointer;}
   </div>
   <div class="org-node">
     <div class="org-role">Wakil Ketua</div>
-    <div class="org-name">Chalista Rezky Aulia</div>
+    <div class="org-name">Chalista rezky Aulia</div>
   </div>
 </div>
 
@@ -2310,20 +2479,61 @@ button{border:0;cursor:pointer;}
 
 <script>
 
+/* ============================================
+   BUKA ALBUM + LOADING PROGRESS
+   ============================================ */
 function bukaAlbum(){
   const intro = document.getElementById("introScreen");
+  const loading = document.getElementById("loadingScreen");
+  const bar = document.getElementById("loadingBar");
+  const percentText = document.getElementById("loadingPercent");
+
+  // 1. Sembunyikan intro
   intro.classList.add("hide");
-  window.scrollTo({top:0, behavior:"instant"});
   setTimeout(()=>{ intro.style.display = "none"; }, 900);
 
-  const bgm = document.getElementById("bgm");
-  bgm.volume = 0.5;
-  bgm.play().then(()=>{
-    document.getElementById("muteBtn").style.display = "flex";
-  }).catch(err => {
-    console.log("Audio gagal autoplay:", err);
-    document.getElementById("muteBtn").style.display = "flex";
-  });
+  // 2. Tampilkan loading screen setelah intro hilang
+  setTimeout(() => {
+    loading.classList.add("show");
+
+    let progress = 0;
+    const interval = setInterval(() => {
+      // Progress naik acak biar natural
+      progress += Math.random() * 12 + 5;
+
+      if(progress >= 100){
+        progress = 100;
+        bar.style.width = progress + "%";
+        percentText.textContent = progress + "%";
+
+        clearInterval(interval);
+
+        // Delay sebentar biar keliatan 100%
+        setTimeout(() => {
+          loading.classList.add("hide");
+
+          setTimeout(() => {
+            loading.classList.remove("show", "hide");
+            loading.style.display = "none";
+
+            // Play BGM setelah loading selesai
+            const bgm = document.getElementById("bgm");
+            bgm.volume = 0.5;
+            bgm.play().then(()=>{
+              document.getElementById("muteBtn").style.display = "flex";
+            }).catch(err => {
+              console.log("Audio gagal autoplay:", err);
+              document.getElementById("muteBtn").style.display = "flex";
+            });
+          }, 600);
+        }, 400);
+      } else {
+        bar.style.width = progress + "%";
+        percentText.textContent = Math.floor(progress) + "%";
+      }
+    }, 180);
+
+  }, 500); // tunggu intro hilang dulu
 }
 
 function toggleMute(){
@@ -2348,7 +2558,6 @@ function openInstagram(){
 
 /* ============================================
    FOTO KENANGAN KELAS (GABUNG SEMUA)
-   Ganti link di bawah sesuai foto kalian
    ============================================ */
 const PHOTOS_KENANGAN = [
   "https://files.catbox.moe/te2o2m.jpg",
@@ -2362,7 +2571,7 @@ const PHOTOS_KENANGAN = [
   "https://files.catbox.moe/4lj04v.jpg"
 ];
 
-const PHOTOS_PER_SLIDE = 9; // 9 foto per halaman (grid 3x3)
+const PHOTOS_PER_SLIDE = 9;
 
 let kenanganIndex = 0;
 let kenanganTotalSlides = 0;
@@ -2371,7 +2580,6 @@ function initKenangan(){
   const track = document.getElementById("kenanganTrack");
   if(!track) return;
 
-  // Bagi jadi beberapa slide
   const slides = [];
   for(let i = 0; i < PHOTOS_KENANGAN.length; i += PHOTOS_PER_SLIDE){
     slides.push(PHOTOS_KENANGAN.slice(i, i + PHOTOS_PER_SLIDE));
@@ -2391,13 +2599,11 @@ function initKenangan(){
     </div>
   `).join("");
 
-  // Dots
   const dotsWrap = document.getElementById("kenanganDots");
   dotsWrap.innerHTML = Array.from({length: kenanganTotalSlides}).map((_, i) => `
     <button class="kenangan-dot ${i===0?'active':''}" onclick="goKenangan(${i})" aria-label="Halaman ${i+1}"></button>
   `).join("");
 
-  // Reset index
   kenanganIndex = 0;
   updateKenanganSlide();
   initKenanganDrag();
@@ -2432,7 +2638,6 @@ function goKenangan(i){
   updateKenanganSlide();
 }
 
-/* ===== Drag Support (geser pakai mouse/touch) ===== */
 function initKenanganDrag(){
   const track = document.getElementById("kenanganTrack");
   const outer = document.getElementById("kenanganOuter");
@@ -2445,7 +2650,6 @@ function initKenanganDrag(){
   }
 
   function onStart(e){
-    // jangan drag kalo ada foto yang lagi diklik (biar gak ganggu lightbox)
     isDragging = true;
     startX = getX(e);
     currentX = startX;
@@ -2476,21 +2680,17 @@ function initKenanganDrag(){
     }
   }
 
-  // Mouse
   outer.addEventListener("mousedown", onStart);
   window.addEventListener("mousemove", onMove);
   window.addEventListener("mouseup", onEnd);
 
-  // Touch
   outer.addEventListener("touchstart", onStart, {passive:true});
   outer.addEventListener("touchmove", onMove, {passive:true});
   outer.addEventListener("touchend", onEnd);
 
-  // Prevent image drag default
   outer.addEventListener("dragstart", e => e.preventDefault());
 }
 
-/* Lightbox */
 function openLightbox(src){
   const lb = document.getElementById("lightbox");
   document.getElementById("lightboxImg").src = src;
@@ -2508,7 +2708,6 @@ document.addEventListener("keydown", e => {
     closeLightbox(null, true);
     closeModal();
   }
-  // Panah keyboard untuk slider kenangan
   if(document.getElementById("kenanganView").classList.contains("active")){
     if(e.key === "ArrowRight") slideKenangan(1);
     if(e.key === "ArrowLeft") slideKenangan(-1);
